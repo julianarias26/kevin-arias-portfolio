@@ -1,1 +1,67 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap');
+@theme {
+  --color-primary: #38bdf8;
+  --color-secondary: #0f172a;
+  --color-surface: #111827;
+  --color-surface-card: #111827;
+  --color-surface-border: #1f2937;
+}
+/* ── Base ───────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #0f172a;
+    color: #e2e8f0;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgba(14, 165, 233, 0.25);
+    color: #e2e8f0;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar       { width: 5px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+}
+
+/* ── Component utilities ────────────────── */
+@layer components {
+  .section-padding {
+    @apply py-24 px-[6%];
+  }
+
+  .section-label {
+    @apply font-mono text-xs text-primary uppercase tracking-[0.12em] mb-3
+           flex items-center gap-2.5;
+  }
+  .section-label::before {
+    content: '';
+    @apply inline-block w-6 h-px bg-primary;
+  }
+
+  .section-title {
+    @apply font-sans font-bold leading-[1.1] tracking-tight
+           text-[clamp(32px,4vw,48px)] text-white;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .card-surface {
+    @apply bg-surface-card border border-surface-border rounded-lg;
+  }
+}
+
+/* ── Utilities ──────────────────────────── */
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-sky-300 bg-clip-text text-transparent;
+  }
+}

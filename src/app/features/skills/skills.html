@@ -1,0 +1,79 @@
+<section id="skills"
+  class="section-padding bg-surface-card border-y border-surface-border">
+
+  <div class="mb-16">
+    <p class="section-label">05 / Skills</p>
+    <h2 class="section-title">
+      Technical <span class="text-surface-muted">Proficiency</span>
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+
+    @for (cat of categories; track cat.category; let ci = $index) {
+      <div appScrollAnimate
+           class="bg-surface border border-surface-border rounded-lg p-6">
+
+        <!-- Category header -->
+        <h3 class="font-sans font-bold text-[15px] text-white mb-5
+                   flex items-center gap-2.5"
+            style="font-family:'Syne',sans-serif">
+          <span [attr.data-icon]="cat.icon"
+                class="iconify w-5 h-5 text-primary flex-shrink-0">
+          </span>
+          {{ cat.category }}
+        </h3>
+
+        <!-- Skills list -->
+        <div class="space-y-4">
+          @for (skill of cat.skills; track skill.name; let si = $index) {
+            <div>
+
+              <!-- Nombre + nivel -->
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-[13px] text-slate-400">{{ skill.name }}</span>
+                <span class="font-mono text-[10px] px-2 py-0.5 rounded-sm border"
+                      [class]="levelClass(skill.level)">
+                  {{ skill.level }}
+                </span>
+              </div>
+
+              <!--
+                Track: estilos 100% inline — sin clases Tailwind que puedan
+                ser purgadas o sobrescritas. Altura y color garantizados.
+              -->
+              <div style="
+                height: 4px;
+                background-color: #1e2d42;
+                border-radius: 9999px;
+                overflow: hidden;
+                width: 100%;">
+
+                <!--
+                  #barFill: referencia para ViewChildren
+                  data-pct: porcentaje que el TS leerá y aplicará
+                  data-delay: delay escalonado que el TS aplicará
+                  Estilos inline garantizan que height y background
+                  no sean afectados por encapsulación ni purge de Tailwind
+                -->
+                <div #barFill
+                     [attr.data-pct]="skill.percentage"
+                     [attr.data-delay]="barDelay(ci, si)"
+                     style="
+                       width: 0%;
+                       height: 4px;
+                       border-radius: 9999px;
+                       background: linear-gradient(to right, #0284c7, #38bdf8);
+                       transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);">
+                </div>
+
+              </div>
+            </div>
+          }
+        </div>
+
+      </div>
+    }
+
+  </div>
+</section>

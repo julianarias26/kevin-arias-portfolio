@@ -1,0 +1,78 @@
+<section id="projects" class="section-padding">
+
+  <div class="mb-16">
+    <p class="section-label">04 / Projects</p>
+    <h2 class="section-title">
+      Featured <span class="text-surface-muted">Work</span>
+    </h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+    @for (project of projects; track project.id) {
+      <div appScrollAnimate
+           class="card-surface p-7 flex flex-col gap-4 relative overflow-hidden
+                  transition-all duration-300 hover:-translate-y-1 hover:border-primary/30
+                  group cursor-default">
+
+        <!-- Top accent line -->
+        <div class="absolute top-0 left-0 right-0 h-[2px]
+                    bg-gradient-to-r from-primary to-transparent
+                    scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300">
+        </div>
+
+        <!-- Type badge -->
+        <div class="inline-flex items-center gap-1.5 font-mono text-[10px] text-primary
+                    bg-primary/[0.06] border border-primary/20 px-2.5 py-1 rounded-sm w-fit">
+          ◈ {{ project.type | titlecase }}
+        </div>
+
+        <!-- Title -->
+        <h3 class="font-sans font-bold text-xl text-white leading-tight"
+            style="font-family:'Syne',sans-serif">
+          {{ project.title }}
+        </h3>
+
+        <!-- Description -->
+        <p class="text-[13px] text-slate-400 leading-[1.7] flex-1">
+          {{ project.shortDescription }}
+        </p>
+
+        <!-- Highlights -->
+        <ul class="space-y-1">
+          @for (h of project.highlights; track h) {
+            <li class="flex gap-2 text-[12px] text-slate-400">
+              <span class="text-primary text-base leading-[1.2] flex-shrink-0">·</span>
+              {{ h }}
+            </li>
+          }
+        </ul>
+
+        <!-- Stack -->
+        <div class="flex flex-wrap gap-1.5 pt-2 border-t border-surface-border">
+          @for (tag of project.stack; track tag) {
+            <span class="font-mono text-[10px] text-slate-500
+                         border border-surface-border px-2 py-0.5 rounded-sm">
+              {{ tag }}
+            </span>
+          }
+        </div>
+
+        <!-- Links -->
+        <div class="flex gap-3">
+          @if (project.repoUrl) {
+            <a [href]="project.repoUrl" target="_blank"
+               class="font-mono text-[11px] text-primary hover:underline">
+              GitHub →
+            </a>
+          }
+          @if (project.liveUrl) {
+            <a [href]="project.liveUrl" target="_blank"
+               class="font-mono text-[11px] text-slate-400 hover:text-white transition-colors">
+              Live →
+            </a>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

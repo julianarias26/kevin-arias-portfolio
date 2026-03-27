@@ -1,0 +1,209 @@
+<!-- ── Navbar ── -->
+<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+     [style.background]="scrolled() || menuOpen()
+       ? 'rgba(8,13,20,0.92)' : 'rgba(8,13,20,0.55)'"
+     [style.border-bottom]="scrolled() || menuOpen()
+       ? '1px solid rgba(14,165,233,0.15)' : '1px solid rgba(255,255,255,0.04)'"
+     [style.box-shadow]="scrolled()
+       ? '0 4px 32px rgba(0,0,0,0.4), 0 1px 0 rgba(14,165,233,0.08)' : 'none'"
+     style="backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);">
+
+  <div class="flex items-center justify-between px-[6%] h-[68px]">
+
+    <!-- ── Logo ── -->
+    <div class="font-mono text-sm tracking-tight flex-shrink-0 select-none">
+      <span style="color:#334155">// </span>
+      <span style="color:#0ea5e9;font-weight:600">dev</span>
+      <span style="color:#475569">.portfolio</span>
+    </div>
+
+    <!-- ── Links desktop ── -->
+    <ul class="hidden md:flex items-center list-none" style="gap:2px">
+      @for (link of navLinks; track link.sectionId; let i = $index) {
+        <li class="relative">
+          <button
+            (click)="navigateTo(link.sectionId)"
+            (mouseenter)="hoveredLink.set(link.sectionId)"
+            (mouseleave)="hoveredLink.set(null)"
+            class="relative flex flex-col items-center px-4 py-2
+                   cursor-pointer border-none rounded-sm transition-all duration-200"
+            [style.background]="linkBg(link.sectionId)">
+
+            <!-- Número -->
+            <span class="font-mono leading-none mb-1 transition-colors duration-200"
+                  style="font-size:9px"
+                  [style.color]="activeSection() === link.sectionId
+                    ? '#0ea5e9' : '#1e2d42'">
+              0{{ i + 1 }}
+            </span>
+
+            <!-- Label -->
+            <span class="font-sans text-[11px] font-medium uppercase
+                         tracking-widest transition-colors duration-200"
+                  [style.color]="activeSection() === link.sectionId
+                    ? '#e2e8f0' : '#475569'">
+              {{ link.label }}
+            </span>
+
+            <!-- Línea activa con gradiente -->
+            <span class="absolute bottom-0 left-1/2 -translate-x-1/2
+                         h-[1.5px] rounded-full transition-all duration-300"
+                  [style.width]="activeSection() === link.sectionId
+                    ? 'calc(100% - 16px)' : '0px'"
+                  [style.background]="'linear-gradient(90deg,transparent,#0ea5e9,transparent)'"
+                  [style.opacity]="activeSection() === link.sectionId ? '1' : '0'">
+            </span>
+
+            <!-- Glow dot -->
+            <span class="absolute -bottom-[3px] left-1/2 -translate-x-1/2
+                         w-1 h-1 rounded-full transition-all duration-300"
+                  [style.background]="'#0ea5e9'"
+                  [style.box-shadow]="activeSection() === link.sectionId
+                    ? '0 0 8px rgba(14,165,233,0.8)' : 'none'"
+                  [style.opacity]="activeSection() === link.sectionId ? '1' : '0'">
+            </span>
+
+          </button>
+        </li>
+      }
+    </ul>
+
+    <!-- ── Lado derecho ── -->
+    <div class="flex items-center gap-3">
+
+      <!-- Status badge -->
+      <div class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-sm"
+           style="background:rgba(14,165,233,0.06);
+                  border:1px solid rgba(14,165,233,0.15)">
+        <span class="w-1.5 h-1.5 rounded-full animate-pulse"
+              style="background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,0.7)">
+        </span>
+        <span class="font-mono text-[10px]" style="color:#475569">available</span>
+      </div>
+
+      <!-- Download CV desktop -->
+      <a href="/assets/cv.pdf" download
+         class="hidden sm:inline-flex items-center gap-2 font-mono text-xs
+                px-4 py-2 rounded-sm transition-all duration-200"
+         (mouseenter)="cvHovered.set(true)"
+         (mouseleave)="cvHovered.set(false)"
+         [style.background]="cvBg()"
+         [style.border]="'1px solid ' + cvBorder()"
+         [style.box-shadow]="cvShadow()"
+         style="color:#0ea5e9">
+        <span data-icon="heroicons:arrow-down-tray" class="iconify w-3.5 h-3.5"></span>
+        Download CV
+      </a>
+
+      <!-- Hamburger móvil -->
+      <button (click)="toggleMenu()"
+              class="md:hidden flex flex-col justify-center items-center
+                     w-9 h-9 rounded-sm cursor-pointer border-none transition-all duration-200"
+              [style.background]="menuOpen()
+                ? 'rgba(14,165,233,0.12)' : 'rgba(255,255,255,0.04)'"
+              [style.border]="menuOpen()
+                ? '1px solid rgba(14,165,233,0.3)'
+                : '1px solid rgba(255,255,255,0.08)'">
+        <span class="flex flex-col gap-[5px] w-4">
+          <span class="block h-[1.5px] rounded-full transition-all duration-300 origin-center"
+                [style.background]="menuOpen() ? '#0ea5e9' : '#94a3b8'"
+                [style.transform]="menuOpen()
+                  ? 'rotate(45deg) translateY(6.5px)' : 'none'">
+          </span>
+          <span class="block h-[1.5px] rounded-full transition-all duration-300"
+                [style.background]="menuOpen() ? '#0ea5e9' : '#94a3b8'"
+                [style.opacity]="menuOpen() ? '0' : '1'"
+                [style.transform]="menuOpen() ? 'scaleX(0)' : 'scaleX(1)'">
+          </span>
+          <span class="block h-[1.5px] rounded-full transition-all duration-300 origin-center"
+                [style.background]="menuOpen() ? '#0ea5e9' : '#94a3b8'"
+                [style.transform]="menuOpen()
+                  ? 'rotate(-45deg) translateY(-6.5px)' : 'none'">
+          </span>
+        </span>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ── Menú móvil glassmorphism ── -->
+  <div class="md:hidden overflow-hidden transition-all duration-500 ease-in-out"
+       [style.max-height]="menuOpen() ? '520px' : '0px'"
+       [style.opacity]="menuOpen() ? '1' : '0'">
+
+    <div class="mx-4 mb-4 rounded-xl overflow-hidden"
+         style="background:rgba(14,20,32,0.85);
+                backdrop-filter:blur(24px);
+                -webkit-backdrop-filter:blur(24px);
+                border:1px solid rgba(14,165,233,0.12);
+                box-shadow:0 8px 32px rgba(0,0,0,0.4),
+                           inset 0 1px 0 rgba(255,255,255,0.04)">
+
+      <div class="flex flex-col px-2 pt-3 pb-2">
+        @for (link of navLinks; track link.sectionId; let i = $index) {
+          <button
+            (click)="navigateTo(link.sectionId)"
+            (mouseenter)="hoveredLink.set(link.sectionId)"
+            (mouseleave)="hoveredLink.set(null)"
+            class="relative flex items-center justify-between w-full
+                   px-4 py-3.5 rounded-lg text-left cursor-pointer
+                   border-none transition-all duration-200"
+            [style.background]="mobileLinkBg(link.sectionId)">
+
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-[10px] w-5 text-right transition-colors duration-200"
+                    [style.color]="activeSection() === link.sectionId
+                      ? '#0ea5e9' : '#334155'">
+                0{{ i + 1 }}
+              </span>
+              <span class="font-sans text-sm font-medium uppercase
+                           tracking-widest transition-colors duration-200"
+                    [style.color]="activeSection() === link.sectionId
+                      ? '#e2e8f0' : '#64748b'">
+                {{ link.label }}
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <span class="h-[1px] rounded-full transition-all duration-300"
+                    [style.width]="activeSection() === link.sectionId ? '24px' : '0px'"
+                    [style.background]="'#0ea5e9'"
+                    [style.opacity]="activeSection() === link.sectionId ? '1' : '0'">
+              </span>
+              <span class="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                    [style.background]="activeSection() === link.sectionId
+                      ? '#0ea5e9' : '#1e2d42'"
+                    [style.box-shadow]="activeSection() === link.sectionId
+                      ? '0 0 6px rgba(14,165,233,0.6)' : 'none'">
+              </span>
+            </div>
+
+          </button>
+        }
+      </div>
+
+      <!-- Separador -->
+      <div class="mx-4 my-1"
+           style="height:1px;background:rgba(14,165,233,0.08)">
+      </div>
+
+      <!-- Footer menú móvil -->
+      <div class="flex items-center justify-between px-6 py-4">
+        <span class="font-mono text-[10px]" style="color:#334155">
+          Backend Developer
+        </span>
+        <a href="/assets/cv.pdf" download
+           class="inline-flex items-center gap-1.5 font-mono text-xs
+                  px-3 py-1.5 rounded-sm transition-all duration-200"
+           style="border:1px solid rgba(14,165,233,0.3);
+                  color:#0ea5e9;
+                  background:rgba(14,165,233,0.06)">
+          <span data-icon="heroicons:arrow-down-tray" class="iconify w-3 h-3"></span>
+          Download CV
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</nav>

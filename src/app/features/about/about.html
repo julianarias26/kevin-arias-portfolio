@@ -1,0 +1,69 @@
+<section id="about"
+  class="section-padding bg-surface-card border-y border-surface-border">
+
+  <!-- Header -->
+  <div class="mb-16">
+    <p class="section-label">01 / About</p>
+    <h2 class="section-title">
+      Who I Am <span class="text-surface-muted">& What I Build</span>
+    </h2>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-16 lg:gap-24 items-center">
+
+    <!-- Photo placeholder -->
+    <div appScrollAnimate class="relative max-w-[300px]">
+  <div class="aspect-[3/4] border border-surface-border rounded-sm
+              relative overflow-hidden">
+    <img
+      src="assets/images/profile.jpg"
+      alt="Your Name — Backend Developer"
+      class="w-full h-full object-cover object-center"
+    />
+    <!-- Overlay sutil para mantener el estilo oscuro -->
+    <div class="absolute inset-0 bg-gradient-to-t
+                from-surface/60 via-transparent to-transparent">
+    </div>
+  </div>
+      <!-- Decorative corners -->
+      <div class="absolute -bottom-3 -right-3 w-20 h-20
+                  border-r-2 border-b-2 border-primary pointer-events-none"></div>
+      <div class="absolute -top-3 -left-3 w-10 h-10
+                  border-l-2 border-t-2 border-surface-border pointer-events-none"></div>
+    </div>
+
+    <!-- Text -->
+    <div appScrollAnimate animationClass="animate-slide-right">
+      <p class="text-slate-400 leading-[1.85] mb-5 text-[15px]">
+        I'm a <strong class="text-white font-medium">Backend Developer</strong> with solid
+        experience building enterprise-grade systems using .NET, C#, and the Microsoft Azure
+        ecosystem. My focus is on writing clean, maintainable code that solves real business
+        problems at scale.
+      </p>
+      <p class="text-slate-400 leading-[1.85] mb-5 text-[15px]">
+        I care deeply about system design: how data flows, how services communicate, how
+        failures are handled gracefully, and how performance can be improved without sacrificing
+        correctness. I approach every project with an architectural mindset, not just an
+        implementation one.
+      </p>
+      <p class="text-slate-400 leading-[1.85] mb-8 text-[15px]">
+        Beyond writing code, I bring experience working with cross-functional teams,
+        understanding business requirements, and translating them into technical solutions
+        that are both pragmatic and built to last.
+      </p>
+
+      <!-- Chips -->
+      <div class="flex flex-wrap gap-2.5">
+        @for (chip of chips; track chip.label) {
+          <span class="font-mono text-[11px] px-3 py-1.5 rounded-sm border transition-colors"
+                [class]="chip.highlight
+                  ? 'border-primary/30 text-primary-light bg-primary/[0.04]'
+                  : 'border-surface-border text-slate-400 bg-transparent'">
+            {{ chip.label }}
+          </span>
+        }
+      </div>
+    </div>
+  </div>
+</section>
