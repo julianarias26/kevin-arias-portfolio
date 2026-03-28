@@ -67,7 +67,6 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
-src/environments/environment.ts
 src/environments/environment.development.ts
 src/environments/environment.prod.ts
 .env
