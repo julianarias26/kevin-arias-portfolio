@@ -1,15 +1,16 @@
-import { Injectable }    from '@angular/core';
-import { from, Observable, forkJoin, map } from 'rxjs';
-import { SupabaseService }  from './supabase.service';
-import { Project }          from '../models/project.model';
-import { Experience }       from '../models/experience.model';
-import { SkillCategory }    from '../models/skill.model';
-import { TechItem }         from '../models/tech-stack.model';
+import { Injectable } from '@angular/core';
+import { from, map, Observable } from 'rxjs';
+import { SupabaseService } from './supabase.service';
+import { Project } from '../models/project.model';
+import { Experience } from '../models/experience.model';
+import { SkillCategory } from '../models/skill.model';
+import { TechItem } from '../models/tech-stack.model';
 
 @Injectable({ providedIn: 'root' })
 export class PortfolioDataService {
-
-  private get db() { return this.supabase.client; }
+  private get db() {
+    return this.supabase.client;
+  }
 
   constructor(private supabase: SupabaseService) {}
 
@@ -18,12 +19,12 @@ export class PortfolioDataService {
     return from(
       this.db
         .from('projects')
-        .select('*')
-        .order('sort_order')
+        .select('id, repo_url, live_url, type, featured, sort_order')
+        .order('sort_order', { ascending: true })
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return (data ?? []).map(this.mapProject);
+        return (data ?? []).map((row) => this.mapProject(row));
       })
     );
   }
@@ -32,13 +33,13 @@ export class PortfolioDataService {
     return from(
       this.db
         .from('projects')
-        .select('*')
+        .select('id, repo_url, live_url, type, featured, sort_order')
         .eq('featured', true)
-        .order('sort_order')
+        .order('sort_order', { ascending: true })
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return (data ?? []).map(this.mapProject);
+        return (data ?? []).map((row) => this.mapProject(row));
       })
     );
   }
@@ -48,21 +49,12 @@ export class PortfolioDataService {
     return from(
       this.db
         .from('experience')
-        .select('*')
-        .order('sort_order')
+        .select('id, current, sort_order')
+        .order('sort_order', { ascending: true })
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return (data ?? []).map(row => ({
-          id:          row['id'],
-          role:        row['role'],
-          company:     row['company'],
-          period:      row['period'],
-          current:     row['current'],
-          description: row['description'],
-          highlights:  row['highlights'] ?? [],
-          stack:       row['stack']      ?? [],
-        } as Experience));
+        return (data ?? []).map((row) => this.mapExperience(row));
       })
     );
   }
@@ -85,18 +77,19 @@ export class PortfolioDataService {
             sort_order
           )
         `)
-        .order('sort_order')
+        .order('sort_order', { ascending: true })
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return (data ?? []).map(cat => ({
+
+        return (data ?? []).map((cat) => ({
           category: cat['category'],
-          icon:     cat['icon'],
-          skills:   ((cat['skills'] as any[]) ?? [])
+          icon: cat['icon'],
+          skills: ((cat['skills'] as any[]) ?? [])
             .sort((a, b) => a['sort_order'] - b['sort_order'])
-            .map(s => ({
-              name:       s['name'],
-              level:      s['level'],
+            .map((s) => ({
+              name: s['name'],
+              level: s['level'],
               percentage: s['percentage'],
             })),
         } as SkillCategory));
@@ -106,39 +99,42 @@ export class PortfolioDataService {
 
   // ── TECH STACK ────────────────────────────────────────────────
   getTechStack(): Observable<TechItem[]> {
-    debugger
     return from(
       this.db
         .from('tech_stack')
-        .select('*')
-        .order('sort_order')
+        .select('name, icon, category, highlight, sort_order')
+        .order('sort_order', { ascending: true })
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
-        return (data ?? []).map(row => ({
-          name:      row['name'],
-          icon:      row['icon'],
-          category:  row['category'],
+
+        return (data ?? []).map((row) => ({
+          name: row['name'],
+          icon: row['icon'],
+          category: row['category'],
           highlight: row['highlight'],
         } as TechItem));
       })
     );
   }
 
-  // ── MAPPER privado ────────────────────────────────────────────
+  // ── MAPPERS privados ──────────────────────────────────────────
   private mapProject(row: any): Project {
     return {
-      id:               row['id'],
-      title:            row['title'],
-      shortDescription: row['short_description'],
-      challenge:        row['challenge'],
-      solution:         row['solution'],
-      stack:            row['stack']       ?? [],
-      highlights:       row['highlights']  ?? [],
-      repoUrl:          row['repo_url']    ?? undefined,
-      liveUrl:          row['live_url']    ?? undefined,
-      type:             row['type'],
-      featured:         row['featured'],
+      id: row['id'],
+      repoUrl: row['repo_url'] ?? undefined,
+      liveUrl: row['live_url'] ?? undefined,
+      type: row['type'],
+      featured: row['featured'],
+      sortOrder: row['sort_order'] ?? 0,
+    };
+  }
+
+  private mapExperience(row: any): Experience {
+    return {
+      id: row['id'],
+      current: row['current'],
+      sortOrder: row['sort_order'] ?? 0,
     };
   }
 }

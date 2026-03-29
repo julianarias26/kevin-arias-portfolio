@@ -1,221 +1,181 @@
 <section id="contact" class="section-padding">
-
   <div class="mb-16">
-    <p class="section-label">06 / Contact</p>
+    <p class="section-label">{{ lang.get('contact.label') }}</p>
     <h2 class="section-title">
-      Let's Build <span class="text-surface-muted">Something Together</span>
+      {{ lang.get('contact.title') }}
+      <span class="text-surface-muted">{{ lang.get('contact.title.dim') }}</span>
     </h2>
   </div>
-
   <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-start">
-
     <!-- ── Left: info ── -->
     <div appScrollAnimate>
       <p class="text-[15px] text-slate-400 leading-[1.85] mb-10">
-        I'm currently open to backend developer opportunities — remote or hybrid.
-        Whether you have a project in mind or just want to connect, feel free to
-        reach out. Typical response time: within 24 hours.
+        {{ lang.get('contact.description') }}
       </p>
-
       <div class="flex flex-col gap-3">
-        @for (link of contactLinks; track link.label) {
-
+        @for (link of contactLinks; track link.href) {
           @if (link.isLink) {
-            <!-- ── Link activo ── -->
-            <a [href]="link.href" target="_blank"
-               class="flex items-center gap-4 px-4 py-3.5
-                      card-surface text-slate-400 text-sm no-underline
-                      hover:border-primary/30 hover:text-white
-                      transition-all duration-200 group">
-
-              <div class="w-9 h-9 shrink-0 rounded-sm
-                          bg-surface border border-surface-border
-                          flex items-center justify-center
-                          group-hover:border-primary/40 transition-colors duration-200">
-                <span [attr.data-icon]="link.icon"
-                      class="iconify w-4.5 h-4.5 text-primary">
-                </span>
+            <a
+              [href]="link.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-4 px-4 py-3.5 card-surface text-slate-400 text-sm no-underline hover:border-primary/30 hover:text-white transition-all duration-200 group"
+            >
+              <div
+                class="w-9 h-9 shrink-0 rounded-sm bg-surface border border-surface-border flex items-center justify-center group-hover:border-primary/40 transition-colors duration-200"
+              >
+                <span [attr.data-icon]="link.icon" class="iconify w-4.5 h-4.5 text-primary"></span>
               </div>
-
               <div class="flex flex-col min-w-0">
-                <span class="font-mono text-[10px] text-slate-600
-                             uppercase tracking-widest mb-0.5">
+                <span class="font-mono text-[10px] text-slate-600 uppercase tracking-widest mb-0.5">
                   {{ link.label }}
                 </span>
-                <span class="text-sm text-slate-400 group-hover:text-white
-                             transition-colors truncate">
+                <span
+                  class="text-sm text-slate-400 group-hover:text-white transition-colors truncate"
+                >
                   {{ link.value }}
                 </span>
               </div>
-
-              <span data-icon="heroicons:arrow-up-right"
-                    class="iconify w-3.5 h-3.5 ml-auto shrink-0
-                           text-slate-600 group-hover:text-primary
-                           transition-colors">
-              </span>
+              <span
+                data-icon="heroicons:arrow-up-right"
+                class="iconify w-3.5 h-3.5 ml-auto shrink-0 text-slate-600 group-hover:text-primary transition-colors"
+              ></span>
             </a>
-
           } @else {
-            <!-- ── Item estático — sin enlace, sin hover, sin flecha ── -->
-            <div class="flex items-center gap-4 px-4 py-3.5
-                        card-surface text-slate-400 text-sm cursor-default">
-
-              <div class="w-9 h-9 shrink-0 rounded-sm
-                          bg-surface border border-surface-border
-                          flex items-center justify-center">
-                <span [attr.data-icon]="link.icon"
-                      class="iconify w-4.5 h-4.5 text-primary">
-                </span>
+            <div
+              class="flex items-center gap-4 px-4 py-3.5 card-surface text-slate-400 text-sm cursor-default"
+            >
+              <div
+                class="w-9 h-9 shrink-0 rounded-sm bg-surface border border-surface-border flex items-center justify-center"
+              >
+                <span [attr.data-icon]="link.icon" class="iconify w-4.5 h-4.5 text-primary"></span>
               </div>
-
               <div class="flex flex-col min-w-0">
-                <span class="font-mono text-[10px] text-slate-600
-                             uppercase tracking-widest mb-0.5">
+                <span class="font-mono text-[10px] text-slate-600 uppercase tracking-widest mb-0.5">
                   {{ link.label }}
                 </span>
-                <span class="text-sm text-slate-400 truncate">
-                  {{ link.value }}
-                </span>
+                <span class="text-sm text-slate-400 truncate"> {{ link.value }} </span>
               </div>
             </div>
           }
-
         }
       </div>
     </div>
-
     <!-- ── Right: form ── -->
     <div appScrollAnimate animationClass="animate-fade-up">
-
       @if (!submitted()) {
-        <form [formGroup]="form" (ngSubmit)="onSubmit()"
-              class="flex flex-col gap-4" novalidate>
-
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4" novalidate>
           <!-- Name -->
           <div class="flex flex-col gap-1.5">
-            <label class="font-mono text-[11px] text-slate-500
-                          uppercase tracking-widest">
-              Name *
+            <label class="font-mono text-[11px] text-slate-500 uppercase tracking-widest">
+              {{ lang.get('contact.form.name') }} *
             </label>
-            <input formControlName="name" type="text"
-                   placeholder="Your name"
-                   class="bg-surface-card border border-surface-border text-white
-                          font-sans text-sm px-4 py-3 rounded-sm outline-none
-                          placeholder-slate-600 focus:border-primary/50
-                          transition-colors duration-200"
-                   [class.border-red-500/50]="hasError('name', 'required') ||
-                                              hasError('name', 'minlength')">
+            <input
+              formControlName="name"
+              type="text"
+              [placeholder]="lang.get('contact.form.namePh')"
+              class="bg-surface-card border border-surface-border text-white font-sans text-sm px-4 py-3 rounded-sm outline-none placeholder-slate-600 focus:border-primary/50 transition-colors duration-200"
+              [class.border-red-500/50]="
+                hasError('name', 'required') || hasError('name', 'minlength')
+              "
+            />
             @if (hasError('name', 'required')) {
               <span class="font-mono text-[10px] text-red-400">
-                Name is required.
+                {{ lang.get('contact.error.nameRequired') }}
               </span>
             }
             @if (hasError('name', 'minlength')) {
               <span class="font-mono text-[10px] text-red-400">
-                Name must be at least 2 characters.
+                {{ lang.get('contact.error.nameMin') }}
               </span>
             }
           </div>
-
           <!-- Email -->
           <div class="flex flex-col gap-1.5">
-            <label class="font-mono text-[11px] text-slate-500
-                          uppercase tracking-widest">
-              Email *
+            <label class="font-mono text-[11px] text-slate-500 uppercase tracking-widest">
+              {{ lang.get('contact.form.email') }} *
             </label>
-            <input formControlName="email" type="email"
-                   placeholder="youremail@company.com"
-                   class="bg-surface-card border border-surface-border text-white
-                          font-sans text-sm px-4 py-3 rounded-sm outline-none
-                          placeholder-slate-600 focus:border-primary/50
-                          transition-colors duration-200"
-                   [class.border-red-500/50]="hasError('email', 'email') ||
-                                              hasError('email', 'required')">
+            <input
+              formControlName="email"
+              type="email"
+              [placeholder]="lang.get('contact.form.emailPh')"
+              class="bg-surface-card border border-surface-border text-white font-sans text-sm px-4 py-3 rounded-sm outline-none placeholder-slate-600 focus:border-primary/50 transition-colors duration-200"
+              [class.border-red-500/50]="
+                hasError('email', 'email') || hasError('email', 'required')
+              "
+            />
             @if (hasError('email', 'required')) {
               <span class="font-mono text-[10px] text-red-400">
-                Email is required.
+                {{ lang.get('contact.error.emailRequired') }}
               </span>
             }
             @if (hasError('email', 'email')) {
               <span class="font-mono text-[10px] text-red-400">
-                Enter a valid email address.
+                {{ lang.get('contact.error.emailInvalid') }}
               </span>
             }
           </div>
-
           <!-- Message -->
           <div class="flex flex-col gap-1.5">
-            <label class="font-mono text-[11px] text-slate-500
-                          uppercase tracking-widest">
-              Message *
+            <label class="font-mono text-[11px] text-slate-500 uppercase tracking-widest">
+              {{ lang.get('contact.form.message') }} *
             </label>
-            <textarea formControlName="message" rows="5"
-                      placeholder="Tell me about your project or opportunity..."
-                      class="bg-surface-card border border-surface-border text-white
-                             font-sans text-sm px-4 py-3 rounded-sm outline-none
-                             placeholder-slate-600 focus:border-primary/50
-                             transition-colors duration-200 resize-none"
-                      [class.border-red-500/50]="hasError('message', 'required') ||
-                                                 hasError('message', 'minlength')">
-            </textarea>
+            <textarea
+              formControlName="message"
+              rows="5"
+              [placeholder]="lang.get('contact.form.messagePh')"
+              class="bg-surface-card border border-surface-border text-white font-sans text-sm px-4 py-3 rounded-sm outline-none placeholder-slate-600 focus:border-primary/50 transition-colors duration-200 resize-none"
+              [class.border-red-500/50]="
+                hasError('message', 'required') || hasError('message', 'minlength')
+              "
+            ></textarea>
             @if (hasError('message', 'required')) {
               <span class="font-mono text-[10px] text-red-400">
-                Message is required.
+                {{ lang.get('contact.error.messageRequired') }}
               </span>
             }
             @if (hasError('message', 'minlength')) {
               <span class="font-mono text-[10px] text-red-400">
-                Message must be at least 20 characters.
+                {{ lang.get('contact.error.messageMin') }}
               </span>
             }
           </div>
-
-          <button type="submit"
-                  class="self-start inline-flex items-center gap-2
-                         bg-primary text-white font-medium text-sm
-                         px-7 py-3.5 rounded-sm hover:bg-primary-dark
-                         hover:-translate-y-px transition-all duration-200
-                         disabled:opacity-50 disabled:cursor-not-allowed"
-                  [disabled]="sending()">
+          <button
+            type="submit"
+            class="self-start inline-flex items-center gap-2 bg-primary text-white font-medium text-sm px-7 py-3.5 rounded-sm hover:bg-primary-dark hover:-translate-y-px transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            [disabled]="sending()"
+          >
             @if (sending()) {
-              <span data-icon="heroicons:arrow-path"
-                    class="iconify w-4 h-4 animate-spin">
-              </span>
-              Sending...
+              <span data-icon="heroicons:arrow-path" class="iconify w-4 h-4 animate-spin"></span>
+              {{ lang.get('contact.form.sending') }}
             } @else {
-              Send Message
-              <span data-icon="heroicons:arrow-right"
-                    class="iconify w-4 h-4">
-              </span>
+              {{ lang.get('contact.form.send') }}
+              <span data-icon="heroicons:arrow-right" class="iconify w-4 h-4"></span>
             }
           </button>
-
         </form>
-
       } @else {
-        <!-- ── Success state ── -->
         <div class="card-surface p-8 text-center flex flex-col items-center gap-4">
-          <div class="w-12 h-12 rounded-full bg-primary/10 border border-primary/20
-                      flex items-center justify-center">
-            <span data-icon="heroicons:check"
-                  class="iconify w-6 h-6 text-primary">
-            </span>
+          <div
+            class="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center"
+          >
+            <span data-icon="heroicons:check" class="iconify w-6 h-6 text-primary"></span>
           </div>
-          <h4 class="font-sans font-bold text-lg text-white"
-              style="font-family:'Syne',sans-serif">
-            Message sent!
+          <h4
+            class="font-sans font-bold text-lg text-white"
+            style="font-family: 'Syne', sans-serif"
+          >
+            {{ lang.get('contact.success.title') }}
           </h4>
-          <p class="text-sm text-slate-400">
-            Thanks for reaching out. I'll get back to you within 24 hours.
-          </p>
-          <button (click)="submitted.set(false)"
-                  class="font-mono text-xs text-primary hover:underline
-                         cursor-pointer bg-transparent border-none">
-            Send another message
+          <p class="text-sm text-slate-400">{{ lang.get('contact.success.desc') }}</p>
+          <button
+            (click)="submitted.set(false)"
+            class="font-mono text-xs text-primary hover:underline cursor-pointer bg-transparent border-none"
+          >
+            {{ lang.get('contact.success.again') }}
           </button>
         </div>
       }
-
     </div>
   </div>
 </section>

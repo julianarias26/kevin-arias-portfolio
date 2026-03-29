@@ -1,27 +1,25 @@
 <section id="stack" class="section-padding">
 
   <div class="mb-16">
-    <p class="section-label">02 / Stack</p>
+    <p class="section-label">{{ lang.get('stack.label') }}</p>
     <h2 class="section-title">
-      Technologies <span class="text-surface-muted">I Work With</span>
+      {{ lang.get('stack.title') }} <span class="text-surface-muted">{{ lang.get('stack.title.dim') }}</span>
     </h2>
   </div>
 
-  <!-- Category filters -->
   <div class="flex flex-wrap gap-2.5 mb-10">
-    @for (cat of categories; track cat) {
+    @for (cat of categories; track cat.value) {
       <button
-        (click)="setCategory(cat)"
+        (click)="setCategory(cat.value)"
         class="font-mono text-[11px] px-4 py-1.5 border rounded-sm transition-all duration-200 cursor-pointer"
-        [class]="activeCategory() === cat
+        [class]="activeCategory() === cat.value
           ? 'border-primary text-primary bg-primary/[0.06]'
           : 'border-surface-border text-slate-500 bg-transparent hover:border-slate-500'">
-        {{ cat }}
+        {{ cat.label }}
       </button>
     }
   </div>
 
-  <!-- Grid -->
   <div class="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-3.5">
     @for (item of filteredItems; track item.name) {
       <div appScrollAnimate
@@ -30,14 +28,14 @@
                   hover:border-primary/40 hover:bg-[#141d2b] group"
            [class.border-primary/20]="item.highlight">
 
-        <!-- Icon slot — swap with ng-icons or devicon when integrated -->
         <i [class]="item.icon + ' text-3xl'"></i>
 
         <span class="text-xs font-medium text-slate-400 group-hover:text-slate-200 transition-colors">
           {{ item.name }}
         </span>
+
         <span class="font-mono text-[10px] text-slate-600">
-          {{ item.category }}
+          {{ getCategoryLabel(item.category) }}
         </span>
       </div>
     }

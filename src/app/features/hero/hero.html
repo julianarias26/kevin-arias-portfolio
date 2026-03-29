@@ -19,14 +19,14 @@
                 border border-primary/25 rounded-sm px-4 py-1.5 mb-8
                 bg-primary/[0.04]">
       <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-      Available for new opportunities
+      {{ lang.get('hero.badge') }}
     </div>
 
     <!-- Name -->
     <h1 class="font-sans text-[clamp(48px,7vw,86px)] font-extrabold leading-none
                tracking-tight text-white mb-3" style="font-family:'Syne',sans-serif">
-      Building backends<br>
-      that <span class="text-primary">actually scale.</span>
+      {{ lang.get('hero.title1') }}<br>
+      <span class="text-primary">{{ lang.get('hero.title2') }}</span>
     </h1>
 
     <!-- Typewriter -->
@@ -40,9 +40,7 @@
     <!-- Description -->
     <p class="text-slate-400 text-base leading-[1.85] max-w-[540px] mb-11
               border-l-2 border-primary pl-5">
-      I design and build robust backend systems — scalable APIs, async processing
-      pipelines, and enterprise integrations that handle real-world complexity with
-      C# and .NET.
+      {{ lang.get('hero.description') }}
     </p>
 
     <!-- CTAs -->
@@ -51,14 +49,14 @@
         class="inline-flex items-center gap-2 bg-primary text-white font-medium
                text-sm px-7 py-3.5 rounded-sm hover:bg-primary-dark
                hover:-translate-y-px transition-all duration-200">
-        View My Work →
+        {{ lang.get('hero.cta.primary') }}
       </button>
       <button (click)="scrollTo('contact')"
         class="inline-flex items-center gap-2 bg-transparent text-white font-medium
                text-sm px-7 py-3 rounded-sm border border-surface-border
                hover:border-primary hover:text-primary hover:-translate-y-px
                transition-all duration-200">
-        Get In Touch
+        {{ lang.get('hero.cta.secondary') }}
       </button>
     </div>
 

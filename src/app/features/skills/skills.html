@@ -2,9 +2,9 @@
   class="section-padding bg-surface-card border-y border-surface-border">
 
   <div class="mb-16">
-    <p class="section-label">05 / Skills</p>
+    <p class="section-label">{{ lang.get('skills.label') }}</p>
     <h2 class="section-title">
-      Technical <span class="text-surface-muted">Proficiency</span>
+      {{ lang.get('skills.title') }} <span class="text-surface-muted">{{ lang.get('skills.title.dim') }}</span>
     </h2>
   </div>
 
@@ -21,7 +21,7 @@
           <span [attr.data-icon]="cat.icon"
                 class="iconify w-5 h-5 text-primary flex-shrink-0">
           </span>
-          {{ cat.category }}
+          {{ translateCategory(cat.category) }}
         </h3>
 
         <!-- Skills list -->
@@ -31,17 +31,13 @@
 
               <!-- Nombre + nivel -->
               <div class="flex justify-between items-center mb-2">
-                <span class="text-[13px] text-slate-400">{{ skill.name }}</span>
+                <span class="text-[13px] text-slate-400">{{ translateSkill(skill.name) }}</span>
                 <span class="font-mono text-[10px] px-2 py-0.5 rounded-sm border"
                       [class]="levelClass(skill.level)">
-                  {{ skill.level }}
+                  {{ translateLevel(skill.level) }}
                 </span>
               </div>
 
-              <!--
-                Track: estilos 100% inline — sin clases Tailwind que puedan
-                ser purgadas o sobrescritas. Altura y color garantizados.
-              -->
               <div style="
                 height: 4px;
                 background-color: #1e2d42;
@@ -49,13 +45,6 @@
                 overflow: hidden;
                 width: 100%;">
 
-                <!--
-                  #barFill: referencia para ViewChildren
-                  data-pct: porcentaje que el TS leerá y aplicará
-                  data-delay: delay escalonado que el TS aplicará
-                  Estilos inline garantizan que height y background
-                  no sean afectados por encapsulación ni purge de Tailwind
-                -->
                 <div #barFill
                      [attr.data-pct]="skill.percentage"
                      [attr.data-delay]="barDelay(ci, si)"

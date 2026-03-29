@@ -3,9 +3,9 @@
 
   <!-- Header -->
   <div class="mb-16">
-    <p class="section-label">01 / About</p>
+    <p class="section-label">{{ lang.get('about.label') }}</p>
     <h2 class="section-title">
-      Who I Am <span class="text-surface-muted">& What I Build</span>
+      {{ lang.get('about.title') }} <span class="text-surface-muted">{{ lang.get('about.title.dim') }}</span>
     </h2>
   </div>
 
@@ -36,21 +36,13 @@
     <!-- Text -->
     <div appScrollAnimate animationClass="animate-slide-right">
       <p class="text-slate-400 leading-[1.85] mb-5 text-[15px]">
-        I'm a <strong class="text-white font-medium">Backend Developer</strong> with solid
-        experience building enterprise-grade systems using .NET, C#, and the Microsoft Azure
-        ecosystem. My focus is on writing clean, maintainable code that solves real business
-        problems at scale.
+        {{ lang.get('about.p1') }}
       </p>
       <p class="text-slate-400 leading-[1.85] mb-5 text-[15px]">
-        I care deeply about system design: how data flows, how services communicate, how
-        failures are handled gracefully, and how performance can be improved without sacrificing
-        correctness. I approach every project with an architectural mindset, not just an
-        implementation one.
+        {{ lang.get('about.p2') }}
       </p>
       <p class="text-slate-400 leading-[1.85] mb-8 text-[15px]">
-        Beyond writing code, I bring experience working with cross-functional teams,
-        understanding business requirements, and translating them into technical solutions
-        that are both pragmatic and built to last.
+        {{ lang.get('about.p3') }}
       </p>
 
       <!-- Chips -->

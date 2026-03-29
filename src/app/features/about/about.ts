@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate';
+import { LanguageService } from '../../core/services/language.service';
 
 @Component({
   selector: 'app-about',
@@ -8,16 +9,22 @@ import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate';
   templateUrl: './about.html',
 })
 export class AboutComponent {
-  readonly chips = [
-      { label: 'C# / .NET',            highlight: true  },
-      { label: 'ASP.NET Core',         highlight: true  },
-      { label: 'Azure Cloud',          highlight: true  },
-      { label: 'SQL Server',           highlight: true  },
-      { label: 'REST APIs',            highlight: true  },
-      { label: 'Redis',                highlight: false },
-      { label: 'Event-Driven Design',  highlight: false },
-      { label: 'Clean Architecture',   highlight: false },
-      { label: 'API Integrations',     highlight: false },
-      { label: 'Scalable Backends',    highlight: false },
-  ];
+
+  get chips(): any[] {
+    return [
+      { label: this.lang.get('about.chip.chip1'),   highlight: true  },
+      { label: this.lang.get('about.chip.chip2'),   highlight: true  },
+      { label: this.lang.get('about.chip.chip3'),   highlight: true  },
+      { label: this.lang.get('about.chip.chip4'),   highlight: true  },
+      { label: this.lang.get('about.chip.chip5'),   highlight: true  },
+      { label: this.lang.get('about.chip.chip6'),   highlight: false },
+      { label: this.lang.get('about.chip.chip7'),   highlight: false },
+      { label: this.lang.get('about.chip.chip8'),   highlight: false },
+      { label: this.lang.get('about.chip.chip9'),   highlight: false },
+      { label: this.lang.get('about.chip.chip10'),  highlight: false },
+    ]
+  } ;
+    
+  constructor(public  lang: LanguageService) {}
+  
 }

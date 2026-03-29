@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     <footer class="px-[6%] py-8 border-t border-surface-border
                    flex flex-col md:flex-row justify-between items-center gap-4">
       <p class="font-mono text-xs text-surface-muted text-center md:text-left">
-        © {{ year }} Kevin Julián Arias Rogeles · Backend .NET Developer
+        © {{ year }} Kevin Julián Arias Rogeles · Angular · Tailwind
       </p>
 
       <div class="flex items-center gap-5">
