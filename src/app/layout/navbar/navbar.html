@@ -17,15 +17,15 @@
       <span style="color:#475569">.{{ langService.get('nav.portfolio') }}</span>
     </div>
 
-    <!-- ── Links desktop ── -->
-    <ul class="hidden md:flex items-center list-none" style="gap:2px">
+    <!-- ── Links desktop — solo lg+ (≥1024px) ── -->
+    <ul class="hidden lg:flex items-center list-none" style="gap:2px">
       @for (link of navLinks; track link.sectionId; let i = $index) {
         <li class="relative">
           <button
             (click)="navigateTo(link.sectionId)"
             (mouseenter)="hoveredLink.set(link.sectionId)"
             (mouseleave)="hoveredLink.set(null)"
-            class="relative flex flex-col items-center px-4 py-2
+            class="relative flex flex-col items-center px-3 py-2
                    cursor-pointer border-none rounded-sm transition-all duration-200"
             [style.background]="linkBg(link.sectionId)">
 
@@ -36,7 +36,7 @@
               0{{ i + 1 }}
             </span>
 
-            <span class="font-sans text-[11px] font-medium uppercase
+            <span class="font-sans text-[10px] font-medium uppercase
                          tracking-widest transition-colors duration-200"
                   [style.color]="activeSection() === link.sectionId
                     ? '#e2e8f0' : '#475569'">
@@ -47,7 +47,7 @@
             <span class="absolute bottom-0 left-1/2 -translate-x-1/2
                          h-[1.5px] rounded-full transition-all duration-300"
                   [style.width]="activeSection() === link.sectionId
-                    ? 'calc(100% - 16px)' : '0px'"
+                    ? 'calc(100% - 12px)' : '0px'"
                   [style.background]="'linear-gradient(90deg,transparent,#0ea5e9,transparent)'"
                   [style.opacity]="activeSection() === link.sectionId ? '1' : '0'">
             </span>
@@ -68,8 +68,8 @@
     <!-- ── Lado derecho ── -->
     <div class="flex items-center gap-2">
 
-      <!-- Status badge — solo lg+ -->
-      <div class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-sm"
+      <!-- Status badge — solo xl+ (≥1280px) -->
+      <div class="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-sm"
            style="background:rgba(14,165,233,0.06);
                   border:1px solid rgba(14,165,233,0.15)">
         <span class="w-1.5 h-1.5 rounded-full animate-pulse"
@@ -80,15 +80,15 @@
         </span>
       </div>
 
-      <!-- ── Lang switcher desktop ── -->
+      <!-- Lang switcher — solo lg+ -->
       <app-lang-switcher
         variant="desktop"
-        class="hidden sm:block">
+        class="hidden lg:block">
       </app-lang-switcher>
 
-      <!-- Download CV desktop -->
+      <!-- Download CV — solo lg+ -->
       <a href="/assets/cv.pdf" download
-         class="hidden sm:inline-flex items-center gap-2 font-mono text-xs
+         class="hidden lg:inline-flex items-center gap-2 font-mono text-xs
                 px-4 py-2 rounded-sm transition-all duration-200"
          (mouseenter)="cvHovered.set(true)"
          (mouseleave)="cvHovered.set(false)"
@@ -100,9 +100,9 @@
         {{ langService.get('nav.downloadCv') }}
       </a>
 
-      <!-- Hamburger — solo móvil -->
+      <!-- Hamburger — tablet y móvil (< lg) -->
       <button (click)="toggleMenu()"
-              class="md:hidden flex flex-col justify-center items-center
+              class="lg:hidden flex flex-col justify-center items-center
                      w-9 h-9 rounded-sm cursor-pointer border-none transition-all duration-200"
               [style.background]="menuOpen()
                 ? 'rgba(14,165,233,0.12)' : 'rgba(255,255,255,0.04)'"
@@ -131,28 +131,28 @@
     </div>
   </div>
 
-  <!-- ── Menú móvil glassmorphism ── -->
-  <div class="md:hidden overflow-hidden transition-all duration-500 ease-in-out"
+  <!-- ── Menú desplegable — tablet y móvil (< lg) ── -->
+  <div class="lg:hidden overflow-hidden transition-all duration-500 ease-in-out"
        [style.max-height]="menuOpen() ? '600px' : '0px'"
        [style.opacity]="menuOpen() ? '1' : '0'">
 
     <div class="mx-4 mb-4 rounded-xl overflow-hidden"
-         style="background:rgba(14,20,32,0.85);
+         style="background:rgba(14,20,32,0.92);
                 backdrop-filter:blur(24px);
                 -webkit-backdrop-filter:blur(24px);
                 border:1px solid rgba(14,165,233,0.12);
                 box-shadow:0 8px 32px rgba(0,0,0,0.4),
                            inset 0 1px 0 rgba(255,255,255,0.04)">
 
-      <!-- Links -->
-      <div class="flex flex-col px-2 pt-3 pb-2">
+      <!-- Links en 2 columnas en tablet, 1 columna en móvil -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 px-2 pt-3 pb-2 gap-1">
         @for (link of navLinks; track link.sectionId; let i = $index) {
           <button
             (click)="navigateTo(link.sectionId)"
             (mouseenter)="hoveredLink.set(link.sectionId)"
             (mouseleave)="hoveredLink.set(null)"
             class="relative flex items-center justify-between w-full
-                   px-4 py-3.5 rounded-lg text-left cursor-pointer
+                   px-4 py-3 rounded-lg text-left cursor-pointer
                    border-none transition-all duration-200"
             [style.background]="mobileLinkBg(link.sectionId)">
 
@@ -172,7 +172,7 @@
 
             <div class="flex items-center gap-2">
               <span class="h-[1px] rounded-full transition-all duration-300"
-                    [style.width]="activeSection() === link.sectionId ? '24px' : '0px'"
+                    [style.width]="activeSection() === link.sectionId ? '20px' : '0px'"
                     [style.background]="'#0ea5e9'"
                     [style.opacity]="activeSection() === link.sectionId ? '1' : '0'">
               </span>
@@ -190,17 +190,28 @@
       <!-- Separador -->
       <div class="mx-4" style="height:1px;background:rgba(14,165,233,0.08)"></div>
 
-      <!-- ── Lang switcher mobile ── -->
+      <!-- Lang switcher mobile -->
       <app-lang-switcher variant="mobile"></app-lang-switcher>
 
       <!-- Separador -->
       <div class="mx-4" style="height:1px;background:rgba(14,165,233,0.08)"></div>
 
-      <!-- Footer menú móvil -->
+      <!-- Footer menú -->
       <div class="flex items-center justify-between px-6 py-4">
-        <span class="font-mono text-[10px]" style="color:#334155">
-          Backend Developer
-        </span>
+        <div class="flex flex-col gap-1">
+          <span class="font-mono text-[10px]" style="color:#334155">
+            Backend Developer
+          </span>
+          <!-- Status visible en tablet dentro del menú -->
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full animate-pulse"
+                  style="background:#22c55e;box-shadow:0 0 4px rgba(34,197,94,0.6)">
+            </span>
+            <span class="font-mono text-[9px]" style="color:#1e2d42">
+              {{ langService.get('nav.available') }}
+            </span>
+          </div>
+        </div>
         <a href="/assets/cv.pdf" download
            class="inline-flex items-center gap-1.5 font-mono text-xs
                   px-3 py-1.5 rounded-sm transition-all duration-200"
