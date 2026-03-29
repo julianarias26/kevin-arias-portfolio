@@ -123,4 +123,30 @@ export class LanguageService {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved === 'es' ? 'es' : 'en';
   }
+
+  loadTranslationsAsync(): Promise<void> {
+  return new Promise((resolve) => {
+    from(
+      this.supabase.client
+        .from('translations')
+        .select('key, en, es')
+    ).subscribe({
+      next: ({ data, error }) => {
+        if (!error) {
+          const map: TranslationMap = {};
+          (data ?? []).forEach(row => {
+            map[row['key']] = { en: row['en'], es: row['es'] };
+          });
+          this._map.set(map);
+        }
+        this._loading.set(false);
+        resolve(); // ← resuelve la Promise y Angular continúa
+      },
+      error: () => {
+        this._loading.set(false);
+        resolve(); // ← resuelve igual para no bloquear si falla
+      },
+    });
+  });
+}
 }
