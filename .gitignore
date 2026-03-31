@@ -68,6 +68,6 @@ yarn-error.log*
 Thumbs.db
 
 src/environments/environment.development.ts
-src/environments/environment.prod.ts
+# src/environments/environment.prod.ts
 .env
 .env.local

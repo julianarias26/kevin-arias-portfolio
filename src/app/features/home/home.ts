@@ -24,10 +24,10 @@ import { DemosComponent } from '../demos/demos.component';
   template: `
     <app-hero />
     <app-about />
+    <app-demos />
     <app-stack />
     <app-experience />
     <app-projects />
-    <app-demos />
     <app-skills />
     <app-contact />
   `,
