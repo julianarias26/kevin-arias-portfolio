@@ -5,6 +5,7 @@ import { Project } from '../models/project.model';
 import { Experience } from '../models/experience.model';
 import { SkillCategory } from '../models/skill.model';
 import { TechItem } from '../models/tech-stack.model';
+import { Demo } from '../models/demo.model';
 
 @Injectable({ providedIn: 'root' })
 export class PortfolioDataService {
@@ -117,6 +118,32 @@ export class PortfolioDataService {
       })
     );
   }
+
+  getDemos(): Observable<Demo[]> {
+  return from(
+    this.db
+      .from('demos')
+      .select('*')
+      .order('sort_order')
+  ).pipe(
+    map(({ data, error }) => {
+      if (error) throw error;
+      return (data ?? []).map(row => ({
+        id:          row['id'],
+        title:       row['title'],
+        description: row['description'],
+        stack:       row['stack']       ?? [],
+        status:      row['status'],
+        icon:        row['icon'],
+        gifUrl:      row['gif_url']     ?? undefined,
+        swaggerUrl:  row['swagger_url'] ?? undefined,
+        repoUrl:     row['repo_url']    ?? undefined,
+        metrics:     row['metrics']     ?? undefined,
+        sortOrder:   row['sort_order'],
+      } as Demo));
+    })
+  );
+}
 
   // ── MAPPERS privados ──────────────────────────────────────────
   private mapProject(row: any): Project {

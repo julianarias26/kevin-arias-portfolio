@@ -28,13 +28,12 @@ export class NavbarComponent {
     { labelKey: 'nav.stack', sectionId: 'stack' },
     { labelKey: 'nav.experience', sectionId: 'experience' },
     { labelKey: 'nav.projects', sectionId: 'projects' },
+    { labelKey: 'Demos', sectionId: 'demos' },
     { labelKey: 'nav.skills', sectionId: 'skills' },
     { labelKey: 'nav.contact', sectionId: 'contact' },
   ];
 
-  private readonly sectionIds = [
-    'hero', 'about', 'stack', 'experience', 'projects', 'skills', 'contact',
-  ];
+  private readonly sectionIds = ['hero', 'about', 'stack', 'experience', 'projects', 'demos', 'skills', 'contact'];
 
   constructor(
     private scrollService: ScrollService,

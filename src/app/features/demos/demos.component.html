@@ -1,0 +1,347 @@
+<section id="demos" class="section-padding" style="position:relative;overflow:hidden;">
+
+  <!-- Glow de fondo -->
+  <div style="position:absolute;top:-100px;right:-100px;width:500px;height:500px;
+              background:radial-gradient(circle,rgba(14,165,233,0.05) 0%,transparent 70%);
+              pointer-events:none;">
+  </div>
+
+  <!-- Header -->
+  <div class="mb-16" appScrollAnimate>
+    <p class="section-label">{{ lang.get('demos.label') }}</p>
+    <h2 class="section-title">
+      {{ lang.get('demos.title') }}
+      <span class="text-surface-muted">{{ lang.get('demos.title.dim') }}</span>
+    </h2>
+    <p class="text-slate-500 text-sm mt-4 max-w-xl font-mono">
+      {{ lang.get('demos.subtitle') }}
+    </p>
+  </div>
+
+  <!-- Estado vacío — sin demos -->
+  @if (demos.length === 0) {
+    <div appScrollAnimate class="relative">
+
+      <!-- Fondo con grid sutil -->
+      <div style="position:absolute;inset:0;border-radius:24px;overflow:hidden;pointer-events:none;">
+        <div style="position:absolute;inset:0;
+                    background-image:linear-gradient(rgba(14,165,233,0.04) 1px,transparent 1px),
+                                     linear-gradient(90deg,rgba(14,165,233,0.04) 1px,transparent 1px);
+                    background-size:40px 40px;">
+        </div>
+      </div>
+
+      <!-- Card central -->
+      <div class="relative mx-auto max-w-2xl rounded-2xl py-20 px-8 text-center"
+           style="background:rgba(14,20,32,0.6);
+                  border:1px dashed rgba(14,165,233,0.15);
+                  backdrop-filter:blur(20px);">
+
+        <!-- Orbita animada -->
+        <div class="relative mx-auto mb-10"
+             style="width:80px;height:80px;">
+          <div style="position:absolute;inset:0;border-radius:50%;
+                      border:1px dashed rgba(14,165,233,0.15);
+                      animation:spin 12s linear infinite;">
+          </div>
+          <div style="position:absolute;inset:8px;border-radius:50%;
+                      border:1px dashed rgba(14,165,233,0.08);
+                      animation:spin 8s linear infinite reverse;">
+          </div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span data-icon="heroicons:command-line"
+                  class="iconify w-7 h-7"
+                  style="color:#1e2d42">
+            </span>
+          </div>
+          <!-- Dot orbitando -->
+          <div style="position:absolute;top:0;left:50%;
+                      width:8px;height:8px;border-radius:50%;
+                      background:#0ea5e9;
+                      box-shadow:0 0 10px rgba(14,165,233,0.8);
+                      transform:translateX(-50%) translateY(-4px);
+                      animation:orbit 4s linear infinite;">
+          </div>
+        </div>
+
+        <!-- Texto principal -->
+        <h3 class="font-sans font-bold text-2xl text-white mb-3"
+            style="font-family:'Syne',sans-serif;">
+          {{ lang.get('demos.empty.title') }}
+        </h3>
+        <p class="text-slate-500 text-sm leading-relaxed mb-8 max-w-md mx-auto">
+          {{ lang.get('demos.empty.desc') }}
+        </p>
+
+        <!-- Terminal fake con texto animado -->
+        <div class="mx-auto max-w-sm rounded-lg text-left px-5 py-4 mb-10"
+             style="background:rgba(0,0,0,0.4);
+                    border:1px solid rgba(14,165,233,0.1);
+                    font-family:'IBM Plex Mono',monospace;">
+          <div class="flex items-center gap-2 mb-3">
+            <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:#febc2e;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:#28c840;"></div>
+            <span class="font-mono text-[10px] ml-2" style="color:#334155">terminal</span>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex gap-2 text-xs">
+              <span style="color:#0ea5e9">$</span>
+              <span style="color:#475569">git status</span>
+            </div>
+            <div class="text-xs" style="color:#334155">
+              On branch <span style="color:#38bdf8">main</span>
+            </div>
+            <div class="text-xs" style="color:#334155">
+              3 projects in development...
+            </div>
+            <div class="flex gap-2 text-xs mt-2">
+              <span style="color:#0ea5e9">$</span>
+              <span style="color:#475569">
+                dotnet run --project ./api<span
+                  style="animation:blink 1s step-end infinite;color:#0ea5e9">_</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="flex items-center justify-center gap-4 flex-wrap">
+          <a href="https://github.com/your-username" target="_blank"
+             class="inline-flex items-center gap-2 font-mono text-xs
+                    px-5 py-2.5 rounded-sm transition-all duration-200"
+             style="border:1px solid rgba(14,165,233,0.3);
+                    color:#0ea5e9;
+                    background:rgba(14,165,233,0.06);">
+            <span data-icon="mdi:github" class="iconify w-4 h-4"></span>
+            {{ lang.get('demos.empty.cta.github') }}
+          </a>
+          <a href="#contact"
+             class="inline-flex items-center gap-2 font-mono text-xs
+                    px-5 py-2.5 rounded-sm transition-all duration-200"
+             style="border:1px solid rgba(255,255,255,0.06);
+                    color:#475569;
+                    background:rgba(255,255,255,0.03);">
+            {{ lang.get('demos.empty.cta.notify') }} →
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  } @else {
+
+    <!-- Grid de demos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+      @for (demo of demos; track demo.id) {
+        <div appScrollAnimate
+             class="group relative rounded-2xl overflow-hidden flex flex-col
+                    transition-all duration-300
+                    hover:-translate-y-1"
+             style="background:rgba(14,20,32,0.7);
+                    border:1px solid rgba(14,165,233,0.12);
+                    backdrop-filter:blur(20px);">
+
+          <!-- Shimmer top bar -->
+          <div style="height:2px;
+                      background:linear-gradient(90deg,#0284c7,#38bdf8,#0284c7);
+                      background-size:200% 100%;
+                      animation:shimmer 3s linear infinite;">
+          </div>
+
+          <!-- GIF / preview area -->
+          @if (demo.gifUrl) {
+            <div class="relative overflow-hidden" style="height:180px;background:#080d14;">
+              <img [src]="demo.gifUrl" [alt]="demo.title"
+                   class="w-full h-full object-cover opacity-80
+                          group-hover:opacity-100 group-hover:scale-105
+                          transition-all duration-500">
+              <div style="position:absolute;inset:0;
+                           background:linear-gradient(to bottom,transparent 50%,rgba(14,20,32,0.9) 100%);">
+              </div>
+            </div>
+          } @else {
+            <!-- Placeholder con patrón cuando no hay GIF -->
+            <div class="relative flex items-center justify-center"
+                 style="height:140px;background:rgba(8,13,20,0.8);
+                         background-image:linear-gradient(rgba(14,165,233,0.03) 1px,transparent 1px),
+                                          linear-gradient(90deg,rgba(14,165,233,0.03) 1px,transparent 1px);
+                         background-size:24px 24px;">
+              <span [attr.data-icon]="demo.icon"
+                    class="iconify w-10 h-10"
+                    style="color:rgba(14,165,233,0.2)">
+              </span>
+            </div>
+          }
+
+          <!-- Contenido -->
+          <div class="flex flex-col flex-1 p-6 gap-4">
+
+            <!-- Header: ícono + título + status -->
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center"
+                     style="background:rgba(14,165,233,0.08);
+                            border:1px solid rgba(14,165,233,0.15);">
+                  <span [attr.data-icon]="demo.icon"
+                        class="iconify w-4 h-4"
+                        style="color:#0ea5e9">
+                  </span>
+                </div>
+                <h3 class="font-sans font-bold text-[16px] text-white leading-tight"
+                    style="font-family:'Syne',sans-serif;">
+                  {{ demo.title }}
+                </h3>
+              </div>
+              <span class="font-mono text-[9px] px-2 py-1 rounded-sm border flex-shrink-0 mt-0.5"
+                    [style]="statusStyle(demo.status)">
+                {{ statusLabel(demo.status) }}
+              </span>
+            </div>
+
+            <!-- Descripción -->
+            <p class="text-[13px] text-slate-500 leading-[1.7] flex-1">
+              {{ demo.description }}
+            </p>
+
+            <!-- Métricas (si existen) -->
+            @if (demo.metrics && demo.metrics.length > 0) {
+              <div class="grid grid-cols-2 gap-2">
+                @for (metric of demo.metrics; track metric.label) {
+                  <div class="rounded-lg px-3 py-2"
+                       style="background:rgba(14,165,233,0.04);
+                              border:1px solid rgba(14,165,233,0.08);">
+                    <div class="font-sans font-bold text-sm text-white"
+                         style="font-family:'Syne',sans-serif;">
+                      {{ metric.value }}
+                    </div>
+                    <div class="font-mono text-[10px]" style="color:#334155;">
+                      {{ metric.label }}
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+
+            <!-- Stack -->
+            <div class="flex flex-wrap gap-1.5">
+              @for (tag of demo.stack; track tag) {
+                <span class="font-mono text-[10px] px-2 py-1 rounded-sm"
+                      style="background:rgba(14,165,233,0.05);
+                             border:1px solid rgba(14,165,233,0.12);
+                             color:#38bdf8;">
+                  {{ tag }}
+                </span>
+              }
+            </div>
+
+            <!-- Separador -->
+            <div style="height:1px;background:rgba(14,165,233,0.07)"></div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-2">
+              @if (demo.swaggerUrl) {
+                <a [href]="demo.swaggerUrl" target="_blank"
+                   class="flex-1 flex items-center justify-center gap-1.5
+                          font-mono text-[11px] py-2 rounded-md
+                          transition-all duration-200"
+                   style="border:1px solid rgba(14,165,233,0.25);
+                          color:#0ea5e9;
+                          background:rgba(14,165,233,0.06);"
+                   onmouseover="this.style.background='rgba(14,165,233,0.12)'"
+                   onmouseout="this.style.background='rgba(14,165,233,0.06)'">
+                  <span data-icon="devicon:swagger" class="iconify w-3.5 h-3.5"></span>
+                  Swagger UI
+                </a>
+              }
+              @if (demo.repoUrl) {
+                <a [href]="demo.repoUrl" target="_blank"
+                   class="flex items-center justify-center gap-1.5
+                          font-mono text-[11px] px-3 py-2 rounded-md
+                          transition-all duration-200"
+                   style="border:1px solid rgba(255,255,255,0.06);
+                          color:#475569;
+                          background:rgba(255,255,255,0.03);"
+                   onmouseover="this.style.background='rgba(255,255,255,0.07)';this.style.color='#94a3b8'"
+                   onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.color='#475569'">
+                  <span data-icon="mdi:github" class="iconify w-4 h-4"></span>
+                </a>
+              }
+              @if (!demo.swaggerUrl && !demo.repoUrl) {
+                <div class="flex-1 flex items-center justify-center
+                            font-mono text-[11px] py-2 rounded-md"
+                     style="border:1px solid rgba(255,255,255,0.04);
+                            color:#1e2d42;
+                            cursor:not-allowed;">
+                  {{ lang.get('demos.card.comingSoon') }}
+                </div>
+              }
+            </div>
+
+          </div>
+
+          <!-- Hover glow border -->
+          <div class="absolute inset-0 rounded-2xl pointer-events-none
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               style="box-shadow:inset 0 0 0 1px rgba(14,165,233,0.2),
+                                 0 0 40px rgba(14,165,233,0.06);">
+          </div>
+
+        </div>
+      }
+
+      <!-- Card placeholder "más próximamente" siempre al final -->
+      <div appScrollAnimate
+           class="relative rounded-2xl flex flex-col items-center
+                  justify-center text-center py-16 px-8 min-h-[280px]"
+           style="border:1px dashed rgba(14,165,233,0.1);
+                  background:rgba(14,20,32,0.3);">
+        <div class="relative mb-5"
+             style="width:48px;height:48px;">
+          <div style="position:absolute;inset:0;border-radius:50%;
+                      border:1px dashed rgba(14,165,233,0.15);
+                      animation:spin 10s linear infinite;">
+          </div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span style="color:#1e2d42;font-size:20px;line-height:1">+</span>
+          </div>
+          <div style="position:absolute;top:0;left:50%;
+                      width:6px;height:6px;border-radius:50%;
+                      background:#0ea5e9;
+                      box-shadow:0 0 8px rgba(14,165,233,0.7);
+                      transform:translateX(-50%) translateY(-3px);
+                      animation:orbit 4s linear infinite;">
+          </div>
+        </div>
+        <div class="font-sans font-bold text-sm mb-2"
+             style="color:#334155;font-family:'Syne',sans-serif;">
+          {{ lang.get('demos.more.title') }}
+        </div>
+        <div class="font-mono text-[11px]" style="color:#1e2d42;">
+          {{ lang.get('demos.more.sub') }}<span style="color:#0ea5e9;animation:blink 1s step-end infinite">_</span>
+        </div>
+      </div>
+
+    </div>
+  }
+
+</section>
+
+<style>
+  @keyframes orbit {
+    from { transform: translateX(-50%) translateY(-3px) rotate(0deg) translateY(-21px) rotate(0deg); }
+    to   { transform: translateX(-50%) translateY(-3px) rotate(360deg) translateY(-21px) rotate(-360deg); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+  }
+</style>

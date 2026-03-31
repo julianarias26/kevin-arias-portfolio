@@ -146,13 +146,42 @@
             [disabled]="sending()"
           >
             @if (sending()) {
-              <span data-icon="heroicons:arrow-path" class="iconify w-4 h-4 animate-spin"></span>
+              <span data-icon="heroicons:arrow-path" class="iconify w-4 h-4 animate-spin"> </span>
               {{ lang.get('contact.form.sending') }}
             } @else {
               {{ lang.get('contact.form.send') }}
-              <span data-icon="heroicons:arrow-right" class="iconify w-4 h-4"></span>
+              <span data-icon="heroicons:arrow-right" class="iconify w-4 h-4"> </span>
             }
           </button>
+          <!-- ── Estado de error ── -->
+          @if (sendError()) {
+            <div
+              class="flex items-start gap-3 p-4 rounded-sm mt-2"
+              style="background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2)"
+            >
+              <span
+                data-icon="heroicons:exclamation-triangle"
+                class="iconify w-4 h-4 flex-shrink-0 mt-0.5"
+                style="color: #ef4444"
+              >
+              </span>
+              <div class="flex-1">
+                <p class="text-sm font-medium" style="color: #fca5a5">
+                  {{ lang.get('contact.error.title') }}
+                </p>
+                <p class="text-xs mt-0.5" style="color: #7f1d1d">
+                  {{ lang.get('contact.error.desc') }}
+                </p>
+              </div>
+              <button
+                (click)="retry()"
+                class="font-mono text-xs cursor-pointer border-none bg-transparent transition-colors"
+                style="color: #ef4444"
+              >
+                {{ lang.get('contact.error.retry') }}
+              </button>
+            </div>
+          }
         </form>
       } @else {
         <div class="card-surface p-8 text-center flex flex-col items-center gap-4">

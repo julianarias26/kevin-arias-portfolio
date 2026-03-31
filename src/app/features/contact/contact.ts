@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ScrollAnimateDirective } from '../../shared/directives/scroll-animate';
 import { LanguageService } from '../../core/services/language.service';
+import { EmailService } from '../../core/services/email.service';
 
 interface ContactLinkConfig {
   icon: string;
@@ -31,6 +32,7 @@ export class ContactComponent {
   form: FormGroup;
   submitted = signal(false);
   sending = signal(false);
+  sendError  = signal(false);   
 
   private readonly contactLinksConfig: ContactLinkConfig[] = [
     {
@@ -65,12 +67,13 @@ export class ContactComponent {
   ];
 
   constructor(
-    private fb: FormBuilder,
-    public lang: LanguageService
+    private fb:           FormBuilder,
+    private emailService: EmailService,
+    public  lang:         LanguageService,
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
+      name:    ['', [Validators.required, Validators.minLength(2)]],
+      email:   ['', [Validators.required, Validators.email]],
       message: ['', [Validators.required, Validators.minLength(20)]],
     });
   }
@@ -92,16 +95,31 @@ export class ContactComponent {
     }
 
     this.sending.set(true);
+    this.sendError.set(false);
 
-    setTimeout(() => {
-      this.sending.set(false);
-      this.submitted.set(true);
-      this.form.reset();
-    }, 1200);
+    this.emailService.send({
+      name:    this.form.value.name,
+      email:   this.form.value.email,
+      message: this.form.value.message,
+    }).subscribe({
+      next: () => {
+        this.sending.set(false);
+        this.submitted.set(true);
+        this.form.reset();
+      },
+      error: () => {
+        this.sending.set(false);
+        this.sendError.set(true);   // muestra mensaje de error
+      },
+    });
   }
 
   hasError(field: string, error: string): boolean {
     const ctrl = this.form.get(field);
     return !!(ctrl?.hasError(error) && ctrl.touched);
+  }
+
+  retry(): void {
+    this.sendError.set(false);
   }
 }

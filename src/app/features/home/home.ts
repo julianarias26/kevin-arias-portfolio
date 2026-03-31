@@ -6,6 +6,7 @@ import { ExperienceComponent } from '../experience/experience';
 import { ProjectsComponent }   from '../projects/projects';
 import { SkillsComponent }     from '../skills/skills';
 import { ContactComponent }    from '../contact/contact';
+import { DemosComponent } from '../demos/demos.component';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { ContactComponent }    from '../contact/contact';
     StackComponent,
     ExperienceComponent,
     ProjectsComponent,
+    DemosComponent,
     SkillsComponent,
     ContactComponent,
   ],
@@ -25,6 +27,7 @@ import { ContactComponent }    from '../contact/contact';
     <app-stack />
     <app-experience />
     <app-projects />
+    <app-demos />
     <app-skills />
     <app-contact />
   `,
