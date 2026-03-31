@@ -1,4 +1,3 @@
-// src/environments/environment.prod.ts
 export const environment = {
   production: true,
   supabaseUrl:  '__SUPABASE_URL__',
