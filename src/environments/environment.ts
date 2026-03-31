@@ -1,10 +1,10 @@
 export const environment = {
-  production: false,
-  supabaseUrl:  'TESTING_ONLY',
-  supabaseKey:  'TESTING_ONLY',
+  production: true,
+  supabaseUrl:  '__SUPABASE_URL__',
+  supabaseKey:  '__SUPABASE_KEY__',
   emailjs: {
-    publicKey:   'TESTING_ONLY',
-    serviceId:   'TESTING_ONLY',
-    templateId:  'TESTING_ONLY',
+    publicKey:   '__EMAILJS_PUBLIC_KEY__',
+    serviceId:   '__EMAILJS_SERVICE_ID__',
+    templateId:  '__EMAILJS_TEMPLATE_ID__',
   },
 };
